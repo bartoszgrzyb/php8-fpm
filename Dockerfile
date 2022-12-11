@@ -17,6 +17,6 @@ RUN chmod +x /usr/bin/composer
 RUN mkdir -p /home/www-data/.composer && chown www-data:www-data /home/www-data/.composer
 
 COPY docker/php/conf.d/symfony.ini $PHP_INI_DIR/conf.d/symfony.ini
-
-COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
+RUN echo "max_execution_time=180" > ${php_vars} &&\
+    echo "max_input_time=180" >> ${php_vars} && \
+    echo "error_reporting = E_ALL & ~E_NOTICE & ~E_DEPRECATED" >> ${php_vars}
