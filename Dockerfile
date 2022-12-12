@@ -13,10 +13,9 @@ RUN apt-get update && apt-get install -yqq --no-install-recommends  libfcgi-bin 
     && docker-php-ext-install pdo pdo_pgsql pgsql intl zip gd opcache  \
     && pecl install ast pcov redis xdebug apcu \
     && docker-php-ext-enable ast pcov redis apcu    
-    
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN chmod +x /usr/bin/composer
-RUN mkdir -p /home/www-data/.composer && chown www-data:www-data /home/www-data/.composer
 
 COPY docker/php/conf.d/symfony.ini $PHP_INI_DIR/conf.d/symfony.ini
 RUN echo "max_execution_time=180" > ${php_vars} &&\
